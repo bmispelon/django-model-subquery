@@ -1,0 +1,26 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "modelsubquery"
+authors = [{name = "Baptiste Mispelon", email = "hello@bmispelon.rocks"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Framework :: Django",
+    "License :: OSI Approved :: MIT License"
+]
+dynamic = ["version", "description"]
+
+[project.urls]
+Home = "https://github.com/bmispelon/django-model-subquery"
+
+[project.optional-dependencies]
+testproject = [
+  "Django",
+  "model-bakery",
+  "time-machine",
+]
