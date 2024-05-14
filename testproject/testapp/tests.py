@@ -3,8 +3,21 @@ from datetime import date
 import time_machine
 from django.test import TestCase
 from model_bakery import baker
+from modelsubquery.functions import _model_fields
 
-from .models import Book, Person
+from .models import Book, Person, Shelve
+
+
+class ModelFieldTest(TestCase):
+    def test_model_fields_book(self):
+        fields = _model_fields(Book, None)
+        self.assertEqual(
+            fields, {"id", "title", "author_id", "published", "rating", "has_cover"}
+        )
+
+    def test_model_fields_shelve(self):
+        fields = _model_fields(Shelve, None)
+        self.assertEqual(fields, {"id", "title"})
 
 
 @time_machine.travel("2000-01-01")
