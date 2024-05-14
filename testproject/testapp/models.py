@@ -31,3 +31,8 @@ class Person(models.Model):
     birth = models.DateField(default=date.today)
 
     objects = PersonQuerySet.as_manager()
+
+
+class Shelve(models.Model):
+    title = models.CharField(max_length=100)
+    books = models.ManyToManyField("Book", related_name="shelves")

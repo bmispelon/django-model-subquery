@@ -13,7 +13,7 @@ def _model_fields(model, fields):
     then return all the declared fields.
     """
     # TODO: the pk/id field should always be returned
-    declared = {f.column for f in model._meta.get_fields()}
+    declared = {f.column for f in model._meta.get_fields() if f.concrete}
     if fields is None:
         return declared
 
