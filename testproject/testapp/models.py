@@ -2,7 +2,6 @@ from datetime import date
 
 from django.db import models
 from django.db.models.functions import ExtractYear
-
 from modelsubquery import ModelSubquery
 
 
@@ -11,6 +10,9 @@ class Book(models.Model):
     rating = models.IntegerField(blank=True, null=True)
     published = models.DateField(default=date.today)
     has_cover = models.BooleanField(default=True)
+    author = models.ForeignKey(
+        "Person", on_delete=models.CASCADE, related_name="books", null=True
+    )
 
 
 class PersonQuerySet(models.QuerySet):

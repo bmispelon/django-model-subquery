@@ -79,3 +79,16 @@ class DBFunctionTestCase(TestCase):
             self.assertEqual(person.book_of_year.title, "test")
         with self.assertNumQueries(1):
             self.assertEqual(person.book_of_year.rating, 5)
+
+    def test_with_related_field(self):
+        author = baker.make(Person)
+        book = baker.make(Book, author=author)
+
+        # Yes he wrote a book in his birthyear! ;-)
+
+        person = Person.objects.with_book_of_the_year().get()
+        self.assertEqual(person.book_of_year, book)
+
+        # The relation is there, but it's lazy!
+        with self.assertNumQueries(1):
+            self.assertEqual(person.book_of_year.author, author)
