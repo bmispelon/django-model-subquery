@@ -1,0 +1,15 @@
+name: Black
+
+on: [pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'  # 3.11 needed for black's use_pyproject
+      - uses: psf/black@stable
+        with:
+          use_pyproject: true
