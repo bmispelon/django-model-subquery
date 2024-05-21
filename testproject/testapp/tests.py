@@ -4,7 +4,21 @@ import time_machine
 from django.test import TestCase
 from model_bakery import baker
 
-from .models import Book, Person
+from modelsubquery.functions import _model_fields
+
+from .models import Book, Person, Shelve
+
+
+class ModelFieldTest(TestCase):
+    def test_model_fields_book(self):
+        fields = _model_fields(Book, None)
+        self.assertEqual(
+            fields, {"id", "title", "author_id", "published", "rating", "has_cover"}
+        )
+
+    def test_model_fields_shelve(self):
+        fields = _model_fields(Shelve, None)
+        self.assertEqual(fields, {"id", "title"})
 
 
 @time_machine.travel("2000-01-01")
@@ -79,3 +93,16 @@ class DBFunctionTestCase(TestCase):
             self.assertEqual(person.book_of_year.title, "test")
         with self.assertNumQueries(1):
             self.assertEqual(person.book_of_year.rating, 5)
+
+    def test_with_related_field(self):
+        author = baker.make(Person)
+        book = baker.make(Book, author=author)
+
+        # Yes he wrote a book in his birthyear! ;-)
+
+        person = Person.objects.with_book_of_the_year().get()
+        self.assertEqual(person.book_of_year, book)
+
+        # The relation is there, but it's lazy!
+        with self.assertNumQueries(1):
+            self.assertEqual(person.book_of_year.author, author)

@@ -11,6 +11,9 @@ class Book(models.Model):
     rating = models.IntegerField(blank=True, null=True)
     published = models.DateField(default=date.today)
     has_cover = models.BooleanField(default=True)
+    author = models.ForeignKey(
+        "Person", on_delete=models.CASCADE, related_name="books", null=True
+    )
 
 
 class PersonQuerySet(models.QuerySet):
@@ -29,3 +32,8 @@ class Person(models.Model):
     birth = models.DateField(default=date.today)
 
     objects = PersonQuerySet.as_manager()
+
+
+class Shelve(models.Model):
+    title = models.CharField(max_length=100)
+    books = models.ManyToManyField("Book", related_name="shelves")
