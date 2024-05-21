@@ -24,3 +24,6 @@ testproject = [
   "model-bakery",
   "time-machine",
 ]
+dev = [
+  "black<24.5.0"
+]
