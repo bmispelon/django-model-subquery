@@ -1,6 +1,7 @@
 """
 Tools to build subqueries that produce model instances
 """
+
 from django.db import models
 from django.db.models.constants import LOOKUP_SEP
 from django.db.models.functions import JSONObject
@@ -26,6 +27,7 @@ class JSONModelField(models.JSONField):
     Any missing fields in the JSON object are marked as "deferred" (and will be
     loaded from the db on access).
     """
+
     # TODO: support the "pk" alias
     # TODO: support fk fields (recursive __ access)
     def __init__(self, model, *args, **kwargs):
@@ -70,6 +72,5 @@ def ModelSubquery(queryset, fields=None):
     """
     jsonobj = model_to_json(queryset.model, fields=fields)
     return models.Subquery(
-        queryset.values_list(jsonobj),
-        output_field=JSONModelField(queryset.model)
+        queryset.values_list(jsonobj), output_field=JSONModelField(queryset.model)
     )
