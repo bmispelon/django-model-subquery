@@ -1,9 +1,8 @@
 from datetime import date
 
-from django.test import TestCase
-
-from model_bakery import baker
 import time_machine
+from django.test import TestCase
+from model_bakery import baker
 
 from .models import Book, Person
 
