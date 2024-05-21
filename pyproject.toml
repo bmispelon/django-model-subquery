@@ -25,5 +25,9 @@ testproject = [
   "time-machine",
 ]
 dev = [
-  "black<24.5.0"
+  "black<24.5.0",
+  "isort",
 ]
+
+[tool.isort]
+profile = "black"
