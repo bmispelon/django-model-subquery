@@ -3,6 +3,7 @@ from datetime import date
 import time_machine
 from django.test import TestCase
 from model_bakery import baker
+
 from modelsubquery.functions import _model_fields
 
 from .models import Book, Person, Shelve

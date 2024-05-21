@@ -2,6 +2,7 @@ from datetime import date
 
 from django.db import models
 from django.db.models.functions import ExtractYear
+
 from modelsubquery import ModelSubquery
 
 
